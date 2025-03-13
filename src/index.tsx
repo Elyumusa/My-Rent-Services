@@ -3,13 +3,19 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './components/app/app'
 import { Setting } from './const';
+import offers from './mocks/offers';
+import { offersList } from './mocks/offer-list';
+
+
 
 const root=createRoot(document.getElementById('root') as HTMLElement
 )
 
 root.render(
   <StrictMode>
-    <App rentalOffersCount={Setting.rentOffersCount}/>
+    <App rentalOffersCount={Setting.rentOffersCount}
+    offers={offers} offersList={offersList} 
+    />
   </StrictMode>,
 )
 
