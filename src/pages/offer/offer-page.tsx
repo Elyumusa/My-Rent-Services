@@ -1,18 +1,33 @@
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Logo } from "../../components/logo/Logo";
-import { FullOffer } from "../../types/offer";
+import { FullOffer, OffersList } from "../../types/offer";
 import { useParams } from "react-router-dom";
 import NotFound from "../404-page/404-page";
 import { SubmitReviewComponent } from "../../components/SubmitReviewComponent/submit-review-component";
+import MapList from "../../components/mapList/mapList";
+import { POINTS } from "../../mocks/points";
+import { CITY } from "../../mocks/city";
+import Map from "../../components/Map/map";
+import { Points } from "../../types/map";
+import { CitiesCardList } from "../../components/CitiesCardList/cities-card-list";
 
 type OfferProps={
   offers: FullOffer[];
+  offersList: OffersList[];
 }
 
-function OfferPage({offers}: OfferProps):JSX.Element {
+function OfferPage({offers, offersList}: OfferProps):JSX.Element {
+  
   const params = useParams();
   const offer = offers.find((item)=>item.id===params.id);
+  const [selectedPoint, setSelectedPoint] = useState<Points | null>(null);
+
+  const handleListItemHover = (listItemName: string) => {
+    const currentPoint = POINTS.find((point) => point.title === listItemName);
+    setSelectedPoint(currentPoint || null);
+  };
+  const nearbyOffers = offers.slice(5, 8);
   if(!offer){
     return <NotFound/>
   }
@@ -56,7 +71,7 @@ function OfferPage({offers}: OfferProps):JSX.Element {
                   <div key={item} className="offer__image-wrapper">
                   <img
                     className="offer__image"
-                    src="img/room.jpg"
+                    src={item}
                     alt="Photo studio"
                   />
                 </div>
@@ -71,9 +86,14 @@ function OfferPage({offers}: OfferProps):JSX.Element {
                 
                 <div className="offer__name-wrapper">
                   <h1 className="offer__name">
-                    Beautiful &amp; luxurious studio at great location
+                    {offer.title}
                   </h1>
-                  <button className="offer__bookmark-button button" type="button">
+                  <button
+                  className={`offer__bookmark-button button ${
+                    offer.isFavorite ? "offer__bookmark-button--active" : ""
+                  }`}
+                  type="button">
+                
                     <svg className="offer__bookmark-icon" width="31" height="33">
                       <use href="#icon-bookmark" />
                     </svg>
@@ -82,67 +102,61 @@ function OfferPage({offers}: OfferProps):JSX.Element {
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: "80%" }}></span>
+                  <span
+                    style={{ width: `${(offer.rating / 5) * 100}%` }}
+                  ></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
-                  <span className="offer__rating-value rating__value">4.8</span>
+                  <span className="offer__rating-value rating__value">{offer.rating}</span>
                 </div>
                 <ul className="offer__features">
                   <li className="offer__feature offer__feature--entire">
-                    Apartment
+                    {offer.type}
                   </li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    3 Bedrooms
+                    {offer.bedrooms} Bedrooms
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                    Max 4 adults
+                    Max {offer.maxAdults} adults
                   </li>
                 </ul>
                 <div className="offer__price">
-                  <b className="offer__price-value">&euro;120</b>
+                  <b className="offer__price-value">&euro;{offer.price}</b>
                   <span className="offer__price-text">&nbsp;night</span>
                 </div>
                 <div className="offer__inside">
                   <h2 className="offer__inside-title">What&apos;s inside</h2>
                   <ul className="offer__inside-list">
-                    <li className="offer__inside-item">Wi-Fi</li>
-                    <li className="offer__inside-item">Washing machine</li>
-                    <li className="offer__inside-item">Towels</li>
-                    <li className="offer__inside-item">Heating</li>
-                    <li className="offer__inside-item">Coffee machine</li>
-                    <li className="offer__inside-item">Baby seat</li>
-                    <li className="offer__inside-item">Kitchen</li>
-                    <li className="offer__inside-item">Dishwasher</li>
-                    <li className="offer__inside-item">Cabel TV</li>
-                    <li className="offer__inside-item">Fridge</li>
+                  {offer.goods.map((item, index) => (
+                    <li key={index} className="offer__inside-item">
+                      {item}
+                    </li>
+                  ))}
                   </ul>
                 </div>
                 <div className="offer__host">
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
-                    <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                      <img
-                        className="offer__avatar user__avatar"
-                        src="img/avatar-angelina.jpg"
-                        width="74"
-                        height="74"
-                        alt="Host avatar"
-                      />
-                    </div>
-                    <span className="offer__user-name">Angelina</span>
-                    <span className="offer__user-status">Pro</span>
+                  <div
+                    className={`offer__avatar-wrapper ${
+                      offer.host.isPro ? "offer__avatar-wrapper--pro" : ""
+                    } user__avatar-wrapper`}
+                  >
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={offer.host.avatarUrl}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
+                  </div>
+                    <span className="offer__user-name">{offer.host.name}</span>
+                    <span className="offer__user-status">
+                    {offer.host.isPro ? "Pro" : ""}
+                  </span>
                   </div>
                   <div className="offer__description">
-                    <p className="offer__text">
-                      A quiet cozy and picturesque that hides behind a a river by
-                      the unique lightness of Amsterdam. The building is green and
-                      from 18th century.
-                    </p>
-                    <p className="offer__text">
-                      An independent House, strategically located between Rembrand
-                      Square and National Opera, but where the bustle of the city
-                      comes to rest in this alley flowery and colorful.
-                    </p>
+                  <p className="offer__text">{offer.description}</p>
                   </div>
                 </div>
                 <section className="offer__reviews reviews">
@@ -185,14 +199,19 @@ function OfferPage({offers}: OfferProps):JSX.Element {
                 </section>
               </div>
             </div>
-            <section className="offer__map map"></section>
+            <section className="offer__map map">
+            <h1>Парки города {CITY.title}:</h1>
+            <MapList points={POINTS} onListItemHover={handleListItemHover} />
+            <Map city={CITY} points={POINTS} selectedPoint={selectedPoint} />
+          </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <div className="near-places__list places__list">
+              <CitiesCardList offersList={nearbyOffers} />
+              {/* <div className="near-places__list places__list">
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
                     <a href="#">
@@ -336,7 +355,7 @@ function OfferPage({offers}: OfferProps):JSX.Element {
                     <p className="place-card__type">Apartment</p>
                   </div>
                 </article>
-              </div>
+              </div> */}
             </section>
           </div>
         </main>

@@ -1,9 +1,14 @@
-import { JSX } from "react";
+import { JSX, useState } from "react";
 import CitiesCard from "../../components/cities-card/cities-card";
 import { Helmet } from "react-helmet-async";
 import { Logo } from "../../components/logo/Logo";
 import { CitiesCardList } from "../../components/CitiesCardList/cities-card-list";
 import { FullOffer, OffersList } from "../../types/offer";
+import { CITY } from "../../mocks/city";
+import { POINTS } from "../../mocks/points";
+import MapList from "../../components/mapList/mapList";
+import Map from "../../components/Map/map";
+import { Points } from "../../types/map";
 
 
 type MainPageProps = {
@@ -12,6 +17,15 @@ type MainPageProps = {
 }
 
 function MainPage({rentalOffersCount, offersList}:MainPageProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Points | null>(null);
+
+  const handleListItemHover = (listItemName:string) => {
+    const currentPoint = POINTS.find((point) =>
+      point.title === listItemName,
+    );
+    setSelectedPoint(currentPoint || null);
+  };
+  
     return(
         <div className="page page--gray page--main">
       <header className="header">
@@ -104,7 +118,14 @@ function MainPage({rentalOffersCount, offersList}:MainPageProps): JSX.Element {
                </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+              <h2>Парки города {CITY.title}:</h2>
+                <MapList points={POINTS} onListItemHover={handleListItemHover}/>
+                <Map city={CITY}
+                points={POINTS}
+                  selectedPoint={selectedPoint}
+                  />
+              </section>
             </div>
           </div>
         </div>

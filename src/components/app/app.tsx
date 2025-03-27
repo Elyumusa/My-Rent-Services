@@ -34,10 +34,10 @@ function App({rentalOffersCount, offers, offersList}:AppMainPageProps): JSX.Elem
             path={AppRoute.Login}
             element={<LoginPage/>}
             />
-            <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offers={offers}/>}/>
+            <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage offers={offers} offersList={offersList}/>}/>
             <Route
             path={AppRoute.Offer}
-            element={<OfferPage offers={offers}/>}
+            element={<OfferPage offers={offers} offersList={offersList}/>}
             />
             <Route
             path="*"

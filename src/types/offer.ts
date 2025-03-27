@@ -1,5 +1,5 @@
 type OfferLocation={
-    latitue: number;
+    latitude: number;
     longitude: number;
     zoom: number;
 };
@@ -31,6 +31,7 @@ export type FullOffer= {
     host: HostOffer;
     images: string[];
     maxAdults: number;
+    previewImage: string;
 }
 
 export type OffersList= {

@@ -10,13 +10,13 @@ export const offersList: OffersList[] = [
     city: {
         name: "New York",
         location: {
-            latitue: 40.7128,
+            latitude: 40.7128,
             longitude: -74.006,
             zoom: 12
         }
     },
     location: {
-        latitue: 40.7128,
+        latitude: 40.7128,
         longitude: -74.006,
         zoom: 12
     },
@@ -32,13 +32,13 @@ export const offersList: OffersList[] = [
     city: {
         name: "New York",
         location: {
-            latitue: 37.7749,
+            latitude: 37.7749,
             longitude: -122.4194,
             zoom: 10
         }
     },
     location: {
-        latitue: 37.7749,
+        latitude: 37.7749,
         longitude: -122.4194,
         zoom: 10
     },
@@ -54,13 +54,13 @@ export const offersList: OffersList[] = [
     city: {
         name: "Miami",
         location: {
-            latitue: 25.7617,
+            latitude: 25.7617,
             longitude: -80.1918,
             zoom: 13
         }
     },
     location: {
-        latitue: 25.7617,
+        latitude: 25.7617,
         longitude: -80.1918,
         zoom: 13
     },
