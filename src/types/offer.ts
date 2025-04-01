@@ -4,12 +4,12 @@ type OfferLocation={
     zoom: number;
 };
 
-type CityOffer ={
+export type CityOffer ={
     name: String;
     location: OfferLocation;
 };
 
-type HostOffer ={
+export type HostOffer ={
     name: string;
     avatarUrl: string;
     isPro: boolean;

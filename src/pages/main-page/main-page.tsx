@@ -1,53 +1,94 @@
-import { JSX, useState } from "react";
+import React, { JSX, useState } from "react";
+import { Link } from "react-router-dom";
 import CitiesCard from "../../components/cities-card/cities-card";
-import { Helmet } from "react-helmet-async";
-import { Logo } from "../../components/logo/Logo";
-import { CitiesCardList } from "../../components/CitiesCardList/cities-card-list";
-import { FullOffer, OffersList } from "../../types/offer";
+import { OffersList } from "../../types/offer";
+import Map from "../../components/Map/map";
 import { CITY } from "../../mocks/city";
 import { POINTS } from "../../mocks/points";
-import MapList from "../../components/mapList/mapList";
-import Map from "../../components/Map/map";
 import { Points } from "../../types/map";
+import MapList from "../../components/mapList/mapList";
+import { useAppSelector } from "../../hooks";
+import { SortOffer } from "../../types/sort";
+import { getOffersByCity, sortOffersByType } from "../../utils";// Убедитесь, что путь правильный
+import { Logo } from "../../components/logo/Logo";
+import { CitiesList } from "../../components/citiesList/citiesList";
+import { SortOptions } from "../../components/sort-options/sort-options";
+import { CitiesCardList } from "../../components/CitiesCardList/cities-card-list";
+import { BlockName } from "../../types/blockName";
 
+
+//Временная функция для фильтрации предложений по городу
+// const getOffersByCity = (
+//   cityName: String | undefined,
+//   offersList: OffersList[]
+// ) => {
+//   if (!cityName) return [];
+//   return offersList.filter((offer) => offer.city.name === cityName);
+// };
 
 type MainPageProps = {
-    rentalOffersCount: number;
-    offersList: OffersList[];
-}
+  rentalOffersCount: number;
+  offersList: OffersList[];
+};
 
-function MainPage({rentalOffersCount, offersList}:MainPageProps): JSX.Element {
+function MainPage({
+  rentalOffersCount,
+  offersList,
+}: MainPageProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Points | null>(null);
 
-  const handleListItemHover = (listItemName:string) => {
-    const currentPoint = POINTS.find((point) =>
-      point.title === listItemName,
-    );
+  const handlePointHover = (listItemName: string) => {
+    const currentPoint = POINTS.find((point) => point.title === listItemName);
     setSelectedPoint(currentPoint || null);
   };
+  //const selectedCity = useAppSelector(getActiveCit);
+  const selectedCity = useAppSelector((state) => state.city);
+  const offersLists = useAppSelector((state) => state.offers);
+  console.log("offerslist:" + offersList[0].city.name)
   
-    return(
-        <div className="page page--gray page--main">
+  const selectedCityOffers = getOffersByCity(selectedCity?.name.toString(), offersList);
+  console.log(`selectedOffers: ${selectedCityOffers.length} city: ${selectedCity?.name} `)
+  //const selectedCityOffers = useMemo(() => getOffersByCity(selectedCity?.name, offersList), [selectedCity, offersList]);
+  const city = selectedCityOffers[0]?.city;
+  const cityRentalOffersCount = selectedCityOffers.length;
+
+  const [selectedOffer, setSelectedOffer] = useState<OffersList | undefined>(
+    undefined
+  );
+
+  const handleOfferHover = (offerId: string) => {
+    const currentOffer = offersLists.find((offer) => offer.id === offerId);
+    setSelectedOffer(currentOffer);
+  };
+
+  const [activeSort, setActiveSort] = useState<SortOffer>("Popular");
+
+  return (
+    <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Logo/>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Myemail@gmail.com</span>
+                  <a
+                    className="header__nav-link header__nav-link--profile"
+                    href="#"
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__user-name user__name">
+                      Myemail@gmail.com
+                    </span>
                     <span className="header__favorite-count">3</span>
                   </a>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <Link to="/login" className="header__nav-link">
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -59,79 +100,49 @@ function MainPage({rentalOffersCount, offersList}:MainPageProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
+            <CitiesList selectedCity={selectedCity} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{rentalOffersCount} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use href="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-               <CitiesCardList offersList={offersList}/>             
-               </div>
+              <b className="places__found">
+                {cityRentalOffersCount} places to stay in {selectedCity?.name}
+              </b>
+              <SortOptions
+                activeSorting={activeSort}
+                onChange={(newSorting) => setActiveSort(newSorting)}
+              />
+              <CitiesCardList block={BlockName.AllPages} offersList={sortOffersByType(selectedCityOffers, activeSort)}
+              onListItemHover={handleOfferHover} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map">
-              <h2>Парки города {CITY.title}:</h2>
-                <MapList points={POINTS} onListItemHover={handleListItemHover}/>
-                <Map city={CITY}
-                points={POINTS}
+              <section className="cities__map">
+                {/* <h2>Парки города {city.name || CITY.title}:</h2> */}
+                {/*  */}
+                {/* <Map
+                  city={CITY}
+                  points={POINTS}
                   selectedPoint={selectedPoint}
-                  />
+                /> */}
+                <Map block={BlockName.AllPages} city={city} offers={selectedCityOffers} selectedOffer={selectedOffer} />
+                {/* <Map
+                  city={city}
+                  points={selectedCityOffers.map((offer) => ({
+                    title: offer.title,
+                    lat: offer.location.latitude,
+                    lng: offer.location.longitude,
+                  }))}
+                  selectedPoint={selectedPoint}
+                /> */}
               </section>
             </div>
           </div>
         </div>
       </main>
     </div>
-    );
+  );
 }
-    
+
 export default MainPage;

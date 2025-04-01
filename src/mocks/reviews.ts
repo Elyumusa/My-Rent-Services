@@ -8,7 +8,7 @@ const reviews: Review[] = [
     rating: 4,
     user: {
       name: "Isaac",
-      avatarUrl: "../public/img/avatar_4-mark-gen.jpg",
+      avatarUrl: "/img/avatar.svg",
       isPro: true
     }
   },
@@ -19,7 +19,7 @@ const reviews: Review[] = [
     rating: 5,
     user: {
       name: "Mary",
-      avatarUrl: "../public/img/avatar_2-marya-sten.jpg",
+      avatarUrl: "/img/avatar.svg",
       isPro: false
     }
   }

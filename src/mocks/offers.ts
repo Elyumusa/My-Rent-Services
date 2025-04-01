@@ -7,18 +7,18 @@ const offers: FullOffer[] = [
     type: "apartment",
     price: 250,
     city: {
-      name: "New York",
+      name: "Paris",
       location: {
-        latitude: 40.7128,
-        longitude: -74.006,
+        latitude: 48.8584,
+        longitude: 2.2945,
         zoom: 12
-      }
-    },
-    location: {
-      latitude: 40.7128,
-      longitude: -74.006,
-      zoom: 12
-    },
+    }
+},
+location: {
+    latitude: 48.8584,
+    longitude: 2.2945,
+    zoom: 12
+},
     isFavorite: true,
     isPremium: true,
     rating: 4.8,
@@ -27,12 +27,12 @@ const offers: FullOffer[] = [
     goods: ["Wi-Fi", "Air conditioning", "Kitchen", "TV"],
     host: {
       name: "Elyumusa Njobvu",
-      avatarUrl: "../public/img/avatar-max.jpg",
+      avatarUrl: "/img/avatar-max.jpg",
       isPro: true
     },
-    images: ["img/apartment-03.jpg"],
+    images: ["/img/apartment-03.jpg"],
     maxAdults: 4,
-    previewImage: "img/apartment-03.jpg"
+    previewImage: "/img/apartment-03.jpg"
   },
   {
     id: "2",
@@ -40,18 +40,18 @@ const offers: FullOffer[] = [
     type: "house",
     price: 150,
     city: {
-      name: "San Francisco",
+      name: "Brussels",
       location: {
-        latitude: 37.7749,
-        longitude: -122.4194,
+        latitude: 50.8467,
+        longitude: 4.3525,
         zoom: 10
-      }
-    },
-    location: {
-      latitude: 37.7749,
-      longitude: -122.4194,
-      zoom: 10
-    },
+    }
+},
+location: {
+    latitude: 50.8467,
+    longitude: 4.3525,
+    zoom: 10
+},
     isFavorite: false,
     isPremium: false,
     rating: 4.2,
@@ -60,12 +60,12 @@ const offers: FullOffer[] = [
     goods: ["Parking", "Garden", "Fireplace", "Wi-Fi"],
     host: {
       name: "Jane Smith",
-      avatarUrl: "../public/img/img/avatar-max.jpg",
+      avatarUrl: "/img/avatar-max.jpg",
       isPro: false
     },
-    images: ["img/apartment-02.jpg"],
+    images: ["/img/apartment-02.jpg"],
     maxAdults: 6,
-    previewImage: "img/apartment-02.jpg"
+    previewImage: "/img/apartment-02.jpg"
   },
   {
     id: "3",
@@ -73,18 +73,18 @@ const offers: FullOffer[] = [
     type: "villa",
     price: 500,
     city: {
-      name: "Miami",
+      name: "Cologne",
       location: {
-        latitude: 25.7617,
-        longitude: -80.1918,
+        latitude: 50.9413,
+        longitude: 6.9583,
         zoom: 13
-      }
-    },
-    location: {
-      latitude: 25.7617,
-      longitude: -80.1918,
-      zoom: 13
-    },
+    }
+},
+location: {
+    latitude: 50.9413,
+    longitude: 6.9583,
+    zoom: 13
+},
     isFavorite: true,
     isPremium: true,
     rating: 4.9,
@@ -93,12 +93,12 @@ const offers: FullOffer[] = [
     goods: ["Private pool", "Wi-Fi", "Jacuzzi", "Beach access"],
     host: {
       name: "Alice Johnson",
-      avatarUrl: "img/avatar-angelina.jpg",
+      avatarUrl: "/img/avatar-angelina.jpg",
       isPro: true
     },
-    images: ["img/apartment-01.jpg"],
+    images: ["/img/apartment-01.jpg"],
     maxAdults: 10,
-    previewImage: "img/apartment-01.jpg"
+    previewImage: "/img/apartment-01.jpg"
   },
   // New Amsterdam properties
   {
@@ -127,12 +127,12 @@ const offers: FullOffer[] = [
     goods: ["Wi-Fi", "Kitchen", "Washing machine", "TV"],
     host: {
       name: "Pieter van Dijk",
-      avatarUrl: "img/avatar.svg",
+      avatarUrl: "/img/avatar.svg",
       isPro: true
     },
-    images: ["img/amsterdam.jpg", "img/apartment-01.jpg"],
+    images: ["/img/amsterdam.jpg", "/img/apartment-01.jpg"],
     maxAdults: 2,
-    previewImage: "img/amsterdam.jpg"
+    previewImage: "/img/amsterdam.jpg"
   },
   {
     id: "5",
@@ -160,12 +160,12 @@ const offers: FullOffer[] = [
     goods: ["Wi-Fi", "Kitchen", "Bike rental", "Coffee maker"],
     host: {
       name: "Anna de Vries",
-      avatarUrl: "img/avatar-angelina.jpg",
+      avatarUrl: "/img/avatar-angelina.jpg",
       isPro: false
     },
-    images: ["img/amsterdam-02.jpg"],
+    images: ["/img/amsterdam.jpg"],
     maxAdults: 4,
-    previewImage: "img/apartment-01.jpg"
+    previewImage: "/img/apartment-01.jpg"
   },
   {
     id: "6",
@@ -193,12 +193,12 @@ const offers: FullOffer[] = [
     goods: ["Wi-Fi", "Air conditioning", "Workspace", "Sound system"],
     host: {
       name: "Mark Janssen",
-      avatarUrl: "img/avatar-max.jpg",
+      avatarUrl: "/img/avatar-max.jpg",
       isPro: true
     },
-    images: ["img/amsterdam-03.jpg"],
+    images: ["/img/apartment-03.jpg"],
     maxAdults: 2,
-    previewImage: "img/apartment-01.jpg"
+    previewImage: "/img/apartment-01.jpg"
   },
   {
     id: "7",
@@ -226,13 +226,112 @@ const offers: FullOffer[] = [
     goods: ["Wi-Fi", "Kitchen", "Garden", "Washing machine", "Parking"],
     host: {
       name: "Angelina Bakker",
-      avatarUrl: "img/avatar-angelina.jpg",
+      avatarUrl: "/img/avatar-angelina.jpg",
       isPro: false
     },
-    images: ["img/amsterdam.jpg"],
+    images: ["/img/amsterdam.jpg"],
     maxAdults: 6,
-    previewImage: "img/apartment-03.jpg"
-  }
+    previewImage: "/img/apartment-03.jpg"
+  },
+  {
+    id: "8",
+    title: "Modern Hamburg Apartment Near the Harbor",
+    type: "apartment",
+    price: 220,
+    city: {
+      name: "Humburg",
+      location: {
+        latitude: 53.551086,
+        longitude: 9.993682,
+        zoom: 12
+      }
+    },
+    location: {
+      latitude: 53.557834,
+      longitude: 9.994579,
+      zoom: 12
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 4.7,
+    description: "Stylish apartment with harbor views, close to the Elbphilharmonie.",
+    bedrooms: 2,
+    goods: ["Wi-Fi", "Kitchen", "Balcony", "Washing machine", "TV"],
+    host: {
+      name: "Klaus Müller",
+      avatarUrl: "/img/avatar.svg",
+      isPro: true
+    },
+    images: ["/img/amsterdam.jpg"],
+    maxAdults: 4,
+    previewImage: "/img/amsterdam.jpg"
+  },
+  {
+    id: "9",
+    title: "Cozy Townhouse in St. Pauli",
+    type: "house",
+    price: 180,
+    city: {
+      name: "Humburg",
+      location: {
+        latitude: 53.551086,
+        longitude: 9.993682,
+        zoom: 12
+      }
+    },
+    location: {
+      latitude: 53.554123,
+      longitude: 9.978456,
+      zoom: 12
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 4.2,
+    description: "Charming townhouse in the lively St. Pauli district, near nightlife.",
+    bedrooms: 3,
+    goods: ["Wi-Fi", "Kitchen", "Heating", "Coffee maker", "Iron"],
+    host: {
+      name: "Sophie Weber",
+      avatarUrl: "/img/avatar.svg",
+      isPro: false
+    },
+    images: ["/img/apartment-03.jpg"],
+    maxAdults: 5,
+    previewImage: "/img/apartment-03.jpg"
+  },
+  {
+    id: "10",
+    title: "Luxury Penthouse with Alster Lake View",
+    type: "apartment",
+    price: 450,
+    city: {
+      name: "Humburg",
+      location: {
+        latitude: 53.551086,
+        longitude: 9.993682,
+        zoom: 12
+      }
+    },
+    location: {
+      latitude: 53.560789,
+      longitude: 9.987654,
+      zoom: 12
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 4.9,
+    description: "High-end penthouse with panoramic views of Alster Lake.",
+    bedrooms: 4,
+    goods: ["Wi-Fi", "Kitchen", "Air conditioning", "Jacuzzi", "Parking"],
+    host: {
+      name: "Thomas Fischer",
+      avatarUrl: "/img/avatar-max.jpg",
+      isPro: true
+    },
+    images: ["/img/apartment-01.jpg"],
+    maxAdults: 6,
+    previewImage: "/img/apartment-01.jpg"
+  },
 ];
 
 export default offers;

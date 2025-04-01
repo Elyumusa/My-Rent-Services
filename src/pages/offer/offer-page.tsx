@@ -11,6 +11,9 @@ import { CITY } from "../../mocks/city";
 import Map from "../../components/Map/map";
 import { Points } from "../../types/map";
 import { CitiesCardList } from "../../components/CitiesCardList/cities-card-list";
+import { BlockName } from "../../types/blockName";
+import ReviewsList from "../../components/reviews-list/reviews-list";
+import { reviews } from "../../mocks/reviews";
 
 type OfferProps={
   offers: FullOffer[];
@@ -27,7 +30,8 @@ function OfferPage({offers, offersList}: OfferProps):JSX.Element {
     const currentPoint = POINTS.find((point) => point.title === listItemName);
     setSelectedPoint(currentPoint || null);
   };
-  const nearbyOffers = offers.slice(5, 8);
+  const nearbyOffers = offers.slice(5, 8); //filter((item)=>item.city.name==offer?.city.name)
+  console.log("Length: " + nearbyOffers.length + offer?.city)
   if(!offer){
     return <NotFound/>
   }
@@ -159,7 +163,16 @@ function OfferPage({offers, offersList}: OfferProps):JSX.Element {
                   <p className="offer__text">{offer.description}</p>
                   </div>
                 </div>
-                <section className="offer__reviews reviews">
+                 {/* REVIEWS */}
+
+              <section className="offer__reviews reviews">
+                <h2 className="reviews__title">
+                  Reviews &middot;{" "}
+                  <span className="reviews__amount">{reviews.length}</span>
+                </h2>
+                <ReviewsList reviews={reviews} />
+              </section>
+                {/* <section className="offer__reviews reviews">
                   <h2 className="reviews__title">
                     Reviews &middot; <span className="reviews__amount">1</span>
                   </h2>
@@ -196,13 +209,13 @@ function OfferPage({offers, offersList}: OfferProps):JSX.Element {
                     </li>
                   </ul>
                   <SubmitReviewComponent/>
-                </section>
+                </section> */}
               </div>
             </div>
             <section className="offer__map map">
-            <h1>Парки города {CITY.title}:</h1>
-            <MapList points={POINTS} onListItemHover={handleListItemHover} />
-            <Map city={CITY} points={POINTS} selectedPoint={selectedPoint} />
+            <h1>Парки города {offer.city.name}:</h1>
+            {/* <MapList points={POINTS} onListItemHover={handleListItemHover} /> */}
+            <Map block={BlockName.AllPages} city={offer.city} offers={offers} selectedOffer={offer} />
           </section>
           </section>
           <div className="container">
@@ -210,7 +223,7 @@ function OfferPage({offers, offersList}: OfferProps):JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <CitiesCardList offersList={nearbyOffers} />
+              <CitiesCardList block={BlockName.NearOfferList} offersList={nearbyOffers} />
               {/* <div className="near-places__list places__list">
                 <article className="near-places__card place-card">
                   <div className="near-places__image-wrapper place-card__image-wrapper">
